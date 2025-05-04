@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konverter Suhu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Konverter Suhu</h1>
+
+        <div class="converter-section">
+            <label for="celsiusInput">Suhu dalam Celsius:</label>
+            <input type="number" id="celsiusInput" placeholder="Masukkan suhu dalam Celsius" />
+            <button onclick="convertCelsiusToFahrenheit()">Konversi ke Fahrenheit</button>
+            <p id="fahrenheitResult" class="result"></p>
+        </div>
+
+        <div class="converter-section">
+            <label for="fahrenheitInput">Suhu dalam Fahrenheit:</label>
+            <input type="number" id="fahrenheitInput" placeholder="Masukkan suhu dalam Fahrenheit" />
+            <button onclick="convertFahrenheitToCelsius()">Konversi ke Celsius</button>
+            <p id="celsiusResult" class="result"></p>
+        </div>
+    </div>
+
+    <script>
+        var Module = {
+            onRuntimeInitialized: function() {
+                console.log("WebAssembly siap!");
+            }
+        };
+
+        // Fungsi untuk konversi Celsius ke Fahrenheit
+        function convertCelsiusToFahrenheit() {
+            var celsius = parseFloat(document.getElementById('celsiusInput').value);
+            if (!isNaN(celsius)) {
+                var fahrenheit = Module._celsiusToFahrenheit(celsius);  // Memanggil fungsi WebAssembly
+                document.getElementById('fahrenheitResult').textContent = fahrenheit + " °F";
+            } else {
+                alert("Masukkan nilai Celsius yang valid!");
+            }
+        }
+
+        // Fungsi untuk konversi Fahrenheit ke Celsius
+        function convertFahrenheitToCelsius() {
+            var fahrenheit = parseFloat(document.getElementById('fahrenheitInput').value);
+            if (!isNaN(fahrenheit)) {
+                var celsius = Module._fahrenheitToCelsius(fahrenheit);  // Memanggil fungsi WebAssembly
+                document.getElementById('celsiusResult').textContent = celsius + " °C";
+            } else {
+                alert("Masukkan nilai Fahrenheit yang valid!");
+            }
+        }
+    </script>
+
+    <script src="index.js"></script>
+</body>
+</html>
